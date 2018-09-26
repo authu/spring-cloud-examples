@@ -12,6 +12,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -19,6 +20,11 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by MrTT (jiang.taojie@foxmail.com)
@@ -38,7 +44,7 @@ public class JwtAuthAutoConfiguration {
      * webflux filter config
      */
     @Configuration
-    @ConditionalOnClass({WebFilter.class})
+    @ConditionalOnClass({WebFilter.class,Mono.class})
     public static class JwtWebFilter implements WebFilter {
 
         @Resource
@@ -54,6 +60,25 @@ public class JwtAuthAutoConfiguration {
 
             return chain.filter(exchange);
         }
+    }
+
+    /**
+     * webmvc filter config
+     */
+    @Configuration
+    @ConditionalOnClass({OncePerRequestFilter.class,FilterChain.class})
+    public static class JwtPerRequestFilter extends OncePerRequestFilter {
+
+        @Resource
+        private JwtAuthServer authServer;
+
+        @Override
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+            String token = authServer.getToken(request);
+            authServer.parse(token);
+            filterChain.doFilter(request,response);
+        }
+
     }
 
     /**

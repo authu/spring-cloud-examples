@@ -17,6 +17,7 @@
 
     <modules>
         <module>base-client</module>
+        <module>base-mvc</module>
         <module>feign-client</module>
         <module>config-client</module>
         <module>schedule</module>

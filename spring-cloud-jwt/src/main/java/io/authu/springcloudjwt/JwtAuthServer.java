@@ -9,6 +9,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -42,6 +43,15 @@ public class JwtAuthServer {
             throw new UnsupportedJwtException("Token is empty!");
         }
         return list.get(0);
+    }
+
+    public String getToken(HttpServletRequest request) {
+        String header = request.getHeader(properties.getHeader());
+        if (StringUtils.isEmpty(header)) {
+            log.warn("Token is empty!");
+            throw new UnsupportedJwtException("Token is empty!");
+        }
+        return header;
     }
 
 }
