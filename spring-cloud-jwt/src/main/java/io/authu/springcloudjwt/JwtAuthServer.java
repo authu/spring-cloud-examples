@@ -5,9 +5,11 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by MrTT (jiang.taojie@foxmail.com)
@@ -31,6 +33,15 @@ public class JwtAuthServer {
         }
         token = token.substring(properties.getPrefix().length());
         return Jwts.parser().setSigningKey(properties.getSecret()).parseClaimsJws(token);
+    }
+
+    public String getToken(ServerHttpRequest request) {
+        List<String> list = request.getHeaders().get(properties.getHeader());
+        if (list == null || list.size() != 1) {
+            log.warn("Token is empty!");
+            throw new UnsupportedJwtException("Token is empty!");
+        }
+        return list.get(0);
     }
 
 }

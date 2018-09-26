@@ -12,9 +12,9 @@ import java.time.Duration;
 @Data
 @ConfigurationProperties(prefix = "authu.jwt")
 public class JwtProperties {
-    private boolean enable = true;
+    private boolean enabled = true;
     private String header = "Authorization";
     private String prefix = "Bearer ";
-    private String secret = "secret";
+    private String secret = "cdsvhsklajxcohbfgflvkmdsochofbnogfmvsdohcurrvdkvfkjdin";
     private Duration timeout = Duration.ofDays(1);
 }
