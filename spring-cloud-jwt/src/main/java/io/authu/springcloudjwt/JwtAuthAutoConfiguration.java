@@ -71,25 +71,48 @@ public class JwtAuthAutoConfiguration {
 
         @Resource
         private JwtAuthServer authServer;
+        @Resource
+        private JwtProperties properties;
 
         @Override
         protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-            String token = authServer.getToken(request);
-            authServer.parse(token);
+            String header = request.getHeader(properties.getHeader());
+            authServer.parse(header);
             filterChain.doFilter(request,response);
         }
 
     }
 
     /**
-     * openfeign config
+     * mvc openfeign config
+     */
+    @Configuration
+    @ConditionalOnClass({RequestInterceptor.class,HttpServletRequest.class})
+    public static class JwtMvcFeignAuthRequestInterceptor implements RequestInterceptor {
+
+        @Resource
+        private JwtProperties properties;
+        @Resource
+        private JwtAuthServer authServer;
+        @Autowired(required = false)
+        private HttpServletRequest mvcRequest;
+
+        @Override
+        public void apply(RequestTemplate requestTemplate) {
+            requestTemplate.header(properties.getHeader(), mvcRequest.getHeader(properties.getHeader()));
+        }
+
+    }
+
+    /**
+     * webflux openfeign config
      *
-     * fixme how to get Request bean?
+     * fixme how to get WebFlux Request bean?
      *
      */
     @Configuration
-    @ConditionalOnClass({RequestInterceptor.class})
-    public static class JwtFeignAuthRequestInterceptor implements RequestInterceptor {
+    @ConditionalOnClass({RequestInterceptor.class,ServerRequest.class})
+    public static class JwtWebFluxFeignAuthRequestInterceptor implements RequestInterceptor {
 
         @Resource
         private JwtProperties properties;
@@ -102,9 +125,7 @@ public class JwtAuthAutoConfiguration {
 
         @Override
         public void apply(RequestTemplate requestTemplate) {
-
             RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-            requestTemplate.header(properties.getHeader(), authServer.getToken(webfluxRequest));
         }
 
     }
