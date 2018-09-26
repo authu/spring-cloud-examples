@@ -26,6 +26,9 @@
 
     <modules>
 
+        <!-- jwt support -->
+        <module>spring-cloud-jwt</module>
+
         <!-- main -->
         <module>api-gateway</module>
         <module>config-server</module>
