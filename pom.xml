@@ -40,6 +40,9 @@
         <module>simple-example</module>
         <module>security-example</module>
 
+        <!-- support -->
+        <module>last-jdk-support</module>
+
     </modules>
 
     <dependencyManagement>
@@ -58,7 +61,25 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-ri</artifactId>
+                <version>${javax-jaxb.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/libs-snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>

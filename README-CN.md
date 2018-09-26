@@ -19,7 +19,7 @@
 这张图片取自[Spring首页](https://spring.io/)   
 
 ### 版本
-- java: jdk 8
+- java: jdk 11
 - spring boot: 2.0.4
 - spring cloud: Finchley.SR1
 - spring boot admin: 2.0.1
