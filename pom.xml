@@ -21,6 +21,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
         <spring-boot-admin.version>2.0.2</spring-boot-admin.version>
+        <authu-jwt.version>0.1.0-SNAPSHOT</authu-jwt.version>
         <maven.test.skip>true</maven.test.skip>
     </properties>
 
@@ -58,7 +59,40 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.authu</groupId>
+                <artifactId>spring-starter-jwt</artifactId>
+                <version>${authu-jwt.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+    <repositories>
+        <repository>
+            <id>local-releases</id>
+            <url>http://localhost:19081/repository/maven-releases/</url>
+            <releases><enabled>true</enabled></releases>
+        </repository>
+        <repository>
+            <id>local-snapshot</id>
+            <url>http://localhost:19081/repository/maven-snapshots/</url>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>local-releases</id>
+            <url>http://localhost:19081/repository/maven-releases/</url>
+            <releases><enabled>true</enabled></releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>local-snapshot</id>
+            <url>http://localhost:19081/repository/maven-snapshots/</url>
+            <snapshots><enabled>true</enabled></snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
