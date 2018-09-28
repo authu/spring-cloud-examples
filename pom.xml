@@ -21,7 +21,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
         <spring-boot-admin.version>2.0.2</spring-boot-admin.version>
-        <authu-jwt.version>0.1.0</authu-jwt.version>
+        <authu-jwt.version>0.1.0.1</authu-jwt.version>
         <maven.test.skip>true</maven.test.skip>
     </properties>
 
@@ -69,25 +69,24 @@
         </dependencies>
     </dependencyManagement>
 
-
     <repositories>
         <repository>
+            <id>bintray-authu-maven-repo</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/authu/maven-repo</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>bintray-authu-spring-starter-jwt</id>
-            <name>bintray</name>
-            <url>https://dl.bintray.com/authu/spring-starter-jwt</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
+            <id>bintray-authu-maven-repo</id>
+            <name>bintray-plugins</name>
+            <url>https://dl.bintray.com/authu/maven-repo</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>bintray-authu-spring-starter-jwt</id>
-            <name>bintray-plugins</name>
-            <url>https://dl.bintray.com/authu/spring-starter-jwt</url>
         </pluginRepository>
     </pluginRepositories>
 
